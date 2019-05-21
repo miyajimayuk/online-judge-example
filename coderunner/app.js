@@ -22,7 +22,7 @@ app.post('/api/run', function (req, res) {
         execCmd = 'python Main.py';
     } else if (language === 'kotlin') {
         filename = 'Main.kt';
-        execCmd = 'kotlinc Main.kt -include-runtime -d main.jar';
+        execCmd = 'kotlinc Main.kt -include-runtime -d main.jar && kotlin main.jar';
     }
 
     // Create container
@@ -35,7 +35,7 @@ app.post('/api/run', function (req, res) {
         '/usr/bin/time -q -f "%e" -o /time.txt ' +
         'bash -c "' +
         execCmd +
-        ' && kotlin main.jar"';
+        '"';
     console.log("Running: " + dockerCmd);
     var containerId = child_process.execSync(dockerCmd).toString().substr(0, 12);
     console.log("ContainerId: " + containerId);
