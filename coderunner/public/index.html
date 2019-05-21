@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Judge System Example</title>
+</head>
+<body>
+    <select id="language">
+        <option value="ruby">Ruby</option>
+        <option value="python">Python</option>
+        <option value="kotlin">Kotlin</option>
+    </select>
+
+    <div>source</div>
+    <div id="source_code"
+        style="width: 100%; height: 200px; border: 1px solid;">
+
+    </div>
+
+    <div>input</div>
+    <textarea id="input"
+              style="width: 100%; height: 50px; resize: vertical;"></textarea>
+
+
+    <button id="run_button" class="btn btn-primary">実行(Ctl-Enter)</button>
+
+    <hr>
+    標準出力：
+    <pre><div id="stdout" style="background: lightgray"></div></pre>
+
+    標準エラー出力：
+    <pre><div id="stderr" style="background: lightgray"></div></pre>
+
+    実行時間：
+    <div id="time" style="background: lightgray"></div>
+
+    終了コード：
+    <div id="exit_code" style="background: lightgray"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js"></script>
+    <script src="run.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>

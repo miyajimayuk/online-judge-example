@@ -20,6 +20,9 @@ app.post('/api/run', function (req, res) {
     else if (language === 'python') {
         filename = 'Main.py';
         execCmd = 'python Main.py';
+    } else if (language === 'kotlin') {
+        filename = 'Main.kt';
+        execCmd = 'kotlinc Main.kt -include-runtime -d main.jar';
     }
 
     // Create container
@@ -27,22 +30,19 @@ app.post('/api/run', function (req, res) {
         'docker create -i ' +
         '--net none ' +
         '--cpuset-cpus 0 ' +
-        '--memory 512m --memory-swap 512m ' +
-        '--ulimit nproc=10:10 ' +
-        '--ulimit fsize=1000000 ' +
         '-w /workspace ' +
         'ubuntu-dev ' +
         '/usr/bin/time -q -f "%e" -o /time.txt ' +
-        'timeout 3 ' +
-        'su nobody -s /bin/bash -c "' +
+        'bash -c "' +
         execCmd +
-        '"';
+        ' && kotlin main.jar"';
     console.log("Running: " + dockerCmd);
     var containerId = child_process.execSync(dockerCmd).toString().substr(0, 12);
     console.log("ContainerId: " + containerId);
 
     // Copy the source code to the container
     child_process.execSync('rm -rf /tmp/workspace && mkdir /tmp/workspace && chmod 777 /tmp/workspace');
+    console.log(source_code);
     fs.writeFileSync('/tmp/workspace/' + filename, source_code);
     dockerCmd = "docker cp /tmp/workspace " + containerId + ":/";
     console.log("Running: " + dockerCmd);
